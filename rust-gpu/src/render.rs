@@ -475,6 +475,7 @@ fn create_display_pipeline(
             ],
         });
     let display_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
+        cache: None,
         label: Some("display"),
         layout: Some(
             &device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
@@ -489,16 +490,18 @@ fn create_display_pipeline(
             ..Default::default()
         },
         vertex: wgpu::VertexState {
+            compilation_options: wgpu::PipelineCompilationOptions::default(),
             module: shader_module,
-            entry_point: "display_vs",
+            entry_point: Some("display_vs"),
             buffers: &[],
         },
         fragment: Some(wgpu::FragmentState {
+            compilation_options: wgpu::PipelineCompilationOptions::default(),
             module: shader_module,
-            entry_point: "display_fs",
+            entry_point: Some("display_fs"),
             targets: &[Some(wgpu::ColorTargetState {
                 blend: None,
-                format: wgpu::TextureFormat::Bgra8Unorm,
+                format: wgpu::TextureFormat::Rgba8Unorm,
                 write_mask: wgpu::ColorWrites::ALL,
             })],
         }),

@@ -3,7 +3,7 @@ struct Ray {
     direction: vec3f
 }
 fn no_ray() -> Ray{
-    Ray(vec3f(0f), vec3f(0f));
+    return Ray(vec3f(0f), vec3f(0f));
 }
 fn at(ray: Ray, t: f32) -> vec3f {
     return ray.origin + t * ray.direction;

@@ -171,6 +171,7 @@ impl Default for InitParam {
     }
 }
 
+#[derive(Clone)]
 pub struct InitConfig {
     pub vp_width: u32,
     pub vp_height: u32,
