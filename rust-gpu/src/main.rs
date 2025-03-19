@@ -116,21 +116,24 @@ impl winit::application::ApplicationHandler for App<'_> {
         event: winit::event::WindowEvent,
     ) {
         use winit::event::{ElementState, WindowEvent};
-        match event {
-            WindowEvent::CloseRequested => event_loop.exit(),
-            WindowEvent::KeyboardInput {
-                device_id: _,
-                is_synthetic,
-                event: input,
-            } => {
-                if !is_synthetic && input.state == ElementState::Pressed {
-                    // renderer.move_camera(input.physical_key)
+        // Only run if state is up (Should be)
+        if let (Some(window), Some(state)) = (&mut self.window, &mut self.state) {
+            match event {
+                WindowEvent::CloseRequested => event_loop.exit(),
+                WindowEvent::KeyboardInput {
+                    device_id: _,
+                    is_synthetic,
+                    event,
+                } => {
+                    if !is_synthetic && event.state == ElementState::Pressed {
+                        // Ignore unidentified key inputs
+                        if let winit::keyboard::PhysicalKey::Code(key_code) = event.physical_key {
+                            state.renderer.move_camera(key_code);
+                        }
+                    }
+                    // println!("{:?}", input);
                 }
-                // println!("{:?}", input);
-            }
-            WindowEvent::RedrawRequested => {
-                // Only draw if state is up (Should be)
-                if let (Some(window), Some(state)) = (&mut self.window, &mut self.state) {
+                WindowEvent::RedrawRequested => {
                     // Wait for the next available frame buffer.
                     let frame: wgpu::SurfaceTexture = state
                         .surface
@@ -146,8 +149,8 @@ impl winit::application::ApplicationHandler for App<'_> {
                     frame.present();
                     window.request_redraw();
                 }
+                _ => (),
             }
-            _ => (),
         }
     }
 }

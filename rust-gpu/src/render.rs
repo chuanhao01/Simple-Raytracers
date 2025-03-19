@@ -42,28 +42,28 @@ pub struct PathTracer {
 }
 
 impl PathTracer {
-    pub fn move_camera(&mut self, scancode: u32) {
-        if scancode == 17 {
-            // w
-            self.camera.move_forward();
-        } else if scancode == 31 {
-            // s
-            self.camera.move_backward();
-        } else if scancode == 30 {
-            // a
-            self.camera.move_left();
-        } else if scancode == 32 {
-            // d
-            self.camera.move_right();
-        } else if scancode == 57 {
-            // space
-            self.camera.move_up();
-        } else if scancode == 42 {
-            // shift
-            self.camera.move_down();
-        } else {
-            // Dont process keypress
-            return;
+    pub fn move_camera(&mut self, key_code: winit::keyboard::KeyCode) {
+        use winit::keyboard::KeyCode;
+        match key_code {
+            KeyCode::KeyW => {
+                self.camera.move_forward();
+            }
+            KeyCode::KeyS => {
+                self.camera.move_backward();
+            }
+            KeyCode::KeyA => {
+                self.camera.move_left();
+            }
+            KeyCode::KeyD => {
+                self.camera.move_right();
+            }
+            KeyCode::Space => {
+                self.camera.move_up();
+            }
+            KeyCode::ShiftLeft => {
+                self.camera.move_down();
+            }
+            _ => return,
         }
 
         self.uniforms.frame_count = 0;
