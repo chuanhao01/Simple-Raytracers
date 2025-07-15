@@ -21,7 +21,7 @@ impl<'a> State<'a> {
         window: Arc<winit::window::Window>,
         init_configs: InitConfig,
     ) -> Result<State<'a>> {
-        use wgpu::TextureFormat::Rgba8Unorm;
+        use wgpu::TextureFormat::Bgra8Unorm;
         // Create an "instance" of wgpu. This is the entry-point to the API.
         let instance = wgpu::Instance::default();
 
@@ -53,8 +53,8 @@ impl<'a> State<'a> {
         let format = caps
             .formats
             .into_iter()
-            .find(|it| matches!(it, Rgba8Unorm))
-            .context("could not find preferred texture format (Rgba8Unorm or Bgra8Unorm)")?;
+            .find(|it| matches!(it, Bgra8Unorm))
+            .context("could not find preferred texture format (Bgra8Unorm or Bgra8Unorm)")?;
         let size = window.inner_size();
         let config = wgpu::SurfaceConfiguration {
             usage: wgpu::TextureUsages::RENDER_ATTACHMENT,

@@ -501,7 +501,7 @@ fn create_display_pipeline(
             entry_point: Some("display_fs"),
             targets: &[Some(wgpu::ColorTargetState {
                 blend: None,
-                format: wgpu::TextureFormat::Rgba8Unorm,
+                format: wgpu::TextureFormat::Bgra8Unorm,
                 write_mask: wgpu::ColorWrites::ALL,
             })],
         }),

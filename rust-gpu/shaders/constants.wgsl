@@ -4,4 +4,4 @@ const PI = 3.1415927f;
 const FRAC_1_PI = 0.31830987f;
 const FRAC_PI_2 = 1.5707964f;
 const NEAR_ZERO = 0.000000001f;
-const DEPTH = 100u;
+const DEPTH = 200u;
